@@ -1,11 +1,11 @@
-const express = require('express');
-const http = require('http');
-const bodyParser = require('body-parser');
-const admin = require('firebase-admin');
-const path = require('path');
-const firestore = require('./firebase');
-const cors = require('cors');
-const socketio = require('socket.io');
+import express from 'express';
+import http from 'http';
+import bodyParser from 'body-parser';
+import admin from 'firebase-admin';
+import path from 'path';
+import firestore from './firebase';
+import cors from 'cors';
+import socketio from 'socket.io';
 
 const app = express();
 const port = 3000;
@@ -58,7 +58,7 @@ app.get('/whatsapp', (req, res) => {
     res.redirect(whatsappLink);
 });
 // Emitir os dados atualizados para os clientes conectados
-const emitDataUpdates = async() => {
+const emitDataUpdates = async () => {
     try {
         const produtosSnapshot = await db.collection('MarlosCardosoProdutos').get();
         const produtosDados = [];
@@ -90,9 +90,8 @@ io.on('connection', socket => {
     });
 });
 
-
 // Rotas para obter os dados
-app.get('/marloscardosoprodutos', async(req, res) => {
+app.get('/marloscardosoprodutos', async (req, res) => {
     try {
         const snapshot = await db.collection('MarlosCardosoProdutos').get();
         const dados = [];
@@ -106,7 +105,7 @@ app.get('/marloscardosoprodutos', async(req, res) => {
     }
 });
 
-app.get('/marloscardosocategorias', async(req, res) => {
+app.get('/marloscardosocategorias', async (req, res) => {
     try {
         const snapshot = await db.collection('MarlosCardosoCategorias').get();
         const dados = [];
@@ -119,8 +118,6 @@ app.get('/marloscardosocategorias', async(req, res) => {
         res.status(500).json({ error: 'Erro ao puxar dados' });
     }
 });
-
-
 
 // Inicie o servidor
 server.listen(port, () => {
